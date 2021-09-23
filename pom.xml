@@ -35,8 +35,9 @@
             			<muleVersion>4.3.0</muleVersion>
            				<username>rohitkulshrestha99</username>
             			<password>Rhristyrk920</password>
-            			<applicationName>healthcareGit</applicationName>
+            			<applicationName>FHIRHealthCare</applicationName>
             			<environment>Sandbox</environment>
+            			<workers>1</workers>
             			<workerType>MICRO</workerType>
             			<objectStoreV2>true</objectStoreV2>
        				 </cloudHubDeployment>
