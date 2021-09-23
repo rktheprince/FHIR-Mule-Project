@@ -37,6 +37,7 @@
             			<password>Rhristyrk920</password>
             			<applicationName>FHIRMuleProject</applicationName>
             			<environment>Sandbox</environment>
+            			<workers>1</workers>
             			<workerType>MICRO</workerType>
             			<objectStoreV2>true</objectStoreV2>
         			</cloudHubDeployment>
