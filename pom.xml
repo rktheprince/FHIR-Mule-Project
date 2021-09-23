@@ -29,6 +29,18 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+    			<configuration>
+        			<cloudHubDeployment>
+            			<uri>https://anypoint.mulesoft.com</uri>
+            			<muleVersion>4.3.0</muleVersion>
+           				<username>rohitkulshrestha99</username>
+            			<password>Rhristyrk920</password>
+            			<applicationName>healthcareGit</applicationName>
+            			<environment>Sandbox</environment>
+            			<workerType>MICRO</workerType>
+            			<objectStoreV2>true</objectStoreV2>
+       				 </cloudHubDeployment>
+    			</configuration>
 			</plugin>
 		</plugins>
 	</build>
