@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="getById" doc:id="94b0fc19-0616-46a2-ab47-1f562dd7e42c" >
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="89dba29d-c552-4afd-8ab3-f6fe2df6d6ec" variableName="pid"/>
+		<salesforce:query doc:name="Query" doc:id="b648bdc3-0c31-4e72-85f0-9c924676d543" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[SELECT pid__c, Name, HealthCloudGA__Age__pc, HealthCloudGA__Gender__pc, Phone, BillingAddress FROM Account
+WHERE pid__c = ':pid']]></salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	"pid" : vars.pid
+}]]]></salesforce:parameters>
+		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="07c242de-a4a7-45ca-a9b7-f86a76e3ccee" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	pid: payload.pid__c,
+	Name: payload.Name,
+	Gender: payload.gender,
+	Age: payload.age,
+	Email: payload.email__c,
+	Phone: payload.Phone,
+	Address: payload.BillingAddress 
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="14e37e34-ec2d-4cbb-9eae-c05773d5e1b0" />
+	</flow>
+	<flow name="post" doc:id="89dd24e3-03e9-44db-8f59-98109a06cbea" >
+		<ee:transform doc:name="Transform Message" doc:id="aa2032d5-5ad0-43e0-890f-01b2060047e2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+[{
+	pid__c: payload.id,
+	Name: payload.name[0].use ++ " " ++ payload.name[0].family,
+	gender__c: payload.gender,
+	age__c: payload.age,
+	email__c: payload.email,
+	Phone: payload.telecom[0].value,
+	BillingCity: payload.address[0].city,
+	BillingState: payload.address[0].state,
+	BillingPostalCode: payload.address[0].postalCode
+}]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<salesforce:upsert objectType="Account" externalIdFieldName="Id" doc:name="Upsert" doc:id="6a033c82-7828-402d-9461-7a275274d5a6" config-ref="Salesforce_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="84b4e57a-4c27-496e-9999-90f255474d23" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="af6051dc-3867-47f1-a153-d18295c5fa10" />
+	</flow>
+</mule>

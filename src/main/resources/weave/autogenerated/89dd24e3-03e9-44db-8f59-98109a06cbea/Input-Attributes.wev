@@ -1,0 +1,26 @@
+%dw 2.0
+
+type auto_89dd24e3_03e9_44db_8f59_98109a06cbea_Input_Attributes = {|
+  clientCertificate?: {|
+    publicKey?: {|  |}, 
+    "type"?: String, 
+    encoded?: Binary
+  |}, 
+  headers: {|
+    "If-None-Exist"?: String, 
+    Accept?: "application/fhir+json" | "*/*" | "application/fhir+xml"
+  |}, 
+  listenerPath: String, 
+  method: String, 
+  queryParams: {|  |}, 
+  queryString: String, 
+  relativePath: String, 
+  remoteAddress: String, 
+  requestPath: String, 
+  requestUri: String, 
+  scheme: String, 
+  uriParams: {|  |}, 
+  version: String, 
+  localAddress: String
+|}
+
