@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany</groupId>
-	<artifactId>fhir_api_project</artifactId>
+	<artifactId>fhir_mule_project</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<app.runtime>4.3.0-20210719</app.runtime>
+		<app.runtime>4.3.0-20210823</app.runtime>
 		<mule.maven.plugin.version>3.5.2</mule.maven.plugin.version>
 	</properties>
 
@@ -29,19 +29,6 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
-    			<configuration>
-        				<cloudHubDeployment>
-            				<uri>https://anypoint.mulesoft.com</uri>
-            				<muleVersion>4.3.0</muleVersion>
-           				<username>rohitkulshrestha99</username>
-            				<password>Rhristyrk920</password>
-            				<applicationName>FHIRmuleproject</applicationName>
-            				<environment>Sandbox</environment>
-            				<workers>1</workers>
-            				<workerType>MICRO</workerType>
-            				<objectStoreV2>true</objectStoreV2>
-       					</cloudHubDeployment>
-    			</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -56,20 +43,13 @@
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-sockets-connector</artifactId>
-			<version>1.2.1</version>
+			<version>1.2.2</version>
 			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>ea6f64b6-fa7a-4bbe-a27c-2759d036cb0b</groupId>
-			<artifactId>fhir-specification</artifactId>
-			<version>1.0.0</version>
-			<classifier>raml</classifier>
-			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-apikit-module</artifactId>
-			<version>1.5.3</version>
+			<version>1.5.5</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
