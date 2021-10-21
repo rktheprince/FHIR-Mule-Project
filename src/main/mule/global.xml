@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
-	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
-http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
-	<http:listener-config name="fhir-r4-us-core-patient-api-httpListenerConfig" doc:name="HTTP Listener config" doc:id="0a9d7f4c-cf69-4e3a-98f6-44e282b55d1d" >
+	<http:listener-config name="fhir-r4-us-core-patient-api-httpListenerConfig" doc:name="HTTP Listener config" doc:id="24c788e7-d295-41a4-8183-2c501566a02d" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
-	<configuration-properties doc:name="Configuration properties" doc:id="f106841b-0fc7-4919-866d-163323cb2491" file="config.yaml" />
-	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="59d76509-5f6b-4656-8a48-4c1cbd4b5a11" >
+	<configuration-properties doc:name="Configuration properties" doc:id="46332746-73bc-466e-b896-008877bdde93" file="config.yaml" />
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="0d409c64-d058-4827-a970-8940e0f6f24a" >
 		<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
 	</salesforce:sfdc-config>
-	<apikit:config outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" doc:name="Router" doc:id="404283dc-286e-419e-bd2a-b2489ceab169" name="fhir-r4-us-core-patient-api-config" api="fhir-r4-us-core-patient-api.raml" />
 </mule>

@@ -1,6 +1,6 @@
 %dw 2.0
 
-type auto_89dd24e3_03e9_44db_8f59_98109a06cbea_Input_Payload = {
+type auto_6467cf79_e59f_4c4e_b4d1_652d55a1cadf_Input_Payload = {
   "us-core-ethinicity"?: {
     extension?: Array<{      extension?: Array<{        extension?: Array<anonymousType_4> {"description": "Additional Content defined by implementations - from Element: extension (recursive)\n"}, 
         id?: String, 

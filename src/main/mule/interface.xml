@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    <apikit:config name="fhir-r4-us-core-patient-api-config" api="resource::e6ba423c-1fd6-473e-afd9-46fd7608942e:fhir-specification:1.0.0:raml:zip:fhir-r4-us-core-patient-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <flow name="fhir-r4-us-core-patient-api-main">
         <http:listener path="/api/*" config-ref="fhir-r4-us-core-patient-api-httpListenerConfig">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -10,7 +12,7 @@
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:error-response>
         </http:listener>
-        <apikit:router config-ref="fhir-r4-us-core-patient-api-config"/>
+        <apikit:router config-ref="fhir-r4-us-core-patient-api-config" />
         <error-handler>
             <on-error-propagate type="APIKIT:BAD_REQUEST">
                 <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
@@ -102,7 +104,7 @@ output application/json
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:error-response>
         </http:listener>
-        <apikit:console config-ref="fhir-r4-us-core-patient-api-config"/>
+        <apikit:console config-ref="fhir-r4-us-core-patient-api-config" />
         <error-handler>
             <on-error-propagate type="APIKIT:NOT_FOUND">
                 <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
@@ -142,89 +144,16 @@ output application/json
         <logger level="INFO" message="delete:\Patient:fhir-r4-us-core-patient-api-config" />
     </flow>
     <flow name="delete:\Patient\(id):fhir-r4-us-core-patient-api-config">
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
-            <ee:variables>
-                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
-            </ee:variables>
-        </ee:transform>
-        <logger level="INFO" message="delete:\Patient\(id):fhir-r4-us-core-patient-api-config" />
+		<logger level="INFO" doc:name="Logger" doc:id="3b35a8e7-93d5-466d-92b7-9aba7df02112" />
     </flow>
     <flow name="get:\Patient:fhir-r4-us-core-patient-api-config">
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  resourceType: "Bundle",
-  id: "6f12a8e2-c256-489b-9532-364b85d554d9",
-  meta: {
-    lastUpdated: "2020-08-27T19:27:30.382+00:00"
-  },
-  "type": "searchset",
-  link: [
-    {
-      relation: "self",
-      url: "http://hapi.fhir.org/baseR4/Patient?_pretty=true"
-    }, 
-    {
-      relation: "next",
-      url: "http://hapi.fhir.org/baseR4?_getpages=6f12a8e2-c256-489b-9532-364b85d554d9&_getpagesoffset=20&_count=20&_pretty=true&_bundletype=searchset"
-    }
-  ],
-  entry: [
-    {
-      fullUrl: "http://hapi.fhir.org/baseR4/Patient/1202643",
-      resource: {
-        resourceType: "Patient",
-        id: "1202643",
-        meta: {
-          versionId: "1",
-          lastUpdated: "2020-06-12T23:27:00.094+00:00",
-          source: "#DOK0mE1uhdFvt8TH"
-        },
-        text: {
-          status: "generated",
-          div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><table class=\"hapiPropertyTable\"><tbody><tr><td>Date of birth</td><td><span>13 October 1972</span></td></tr></tbody></table></div>"
-        },
-        gender: "male",
-        birthDate: "1972-10-13"
-      },
-      search: {
-        mode: "match"
-      }
-    }, 
-    {
-      fullUrl: "http://hapi.fhir.org/baseR4/Patient/1202644",
-      resource: {
-        resourceType: "Patient",
-        id: "1202644",
-        meta: {
-          versionId: "1",
-          lastUpdated: "2020-06-12T23:27:30.110+00:00",
-          source: "#G0avmd2LCpxfto12"
-        },
-        text: {
-          status: "generated",
-          div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><table class=\"hapiPropertyTable\"><tbody><tr><td>Date of birth</td><td><span>13 October 1972</span></td></tr></tbody></table></div>"
-        },
-        gender: "male",
-        birthDate: "1972-10-13"
-      },
-      search: {
-        mode: "match"
-      }
-    }
-  ]
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
+		<flow-ref doc:name="get" doc:id="03a23599-20f0-4483-82b3-21af1a807ca8" name="get"/>
     </flow>
     <flow name="get:\Patient\(id):fhir-r4-us-core-patient-api-config">
-		<flow-ref doc:name="getById" doc:id="e868c69b-7a83-449c-aec2-12ec7942b341" name="getById"/>
+		<flow-ref doc:name="getById" doc:id="cf375ff9-1a24-42f2-ad30-321daaaedd07" name="getById"/>
     </flow>
     <flow name="post:\Patient:application\fhir+json:fhir-r4-us-core-patient-api-config">
-		<flow-ref doc:name="post" doc:id="9908c670-d319-42fb-8d00-83f616feabb8" name="post"/>
+		<flow-ref doc:name="post" doc:id="1a28792d-7c0e-4dbe-9d33-604137a0d6be" name="post"/>
     </flow>
     <flow name="post:\Patient:application\fhir+xml:fhir-r4-us-core-patient-api-config">
         <logger level="INFO" message="post:\Patient:application\fhir+xml:fhir-r4-us-core-patient-api-config" />

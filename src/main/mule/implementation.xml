@@ -5,18 +5,11 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<flow name="getById" doc:id="c9484409-2888-4250-96ea-1c6307f6c74c" >
-		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="221f30ed-54a6-4d86-9d1e-6feaf2862680" variableName="pid"/>
-		<salesforce:query doc:name="Query" doc:id="5d599326-6694-4ef1-80a8-35b8d09ab85d" config-ref="Salesforce_Config">
-			<salesforce:salesforce-query ><![CDATA[SELECT pid__c, Name, HealthCloudGA__Age__pc, HealthCloudGA__Gender__pc, Phone, BillingAddress FROM Account
-WHERE pid__c = ':pid']]></salesforce:salesforce-query>
-			<salesforce:parameters ><![CDATA[#[output application/java
----
-{
-	"pid" : vars.pid
-}]]]></salesforce:parameters>
-		</salesforce:query>
-		<ee:transform doc:name="Transform Message" doc:id="0797a8af-28fc-4c3b-afa6-824610e366eb" >
+	<flow name="get" doc:id="8ab6b450-ba12-4ea8-acbe-a221c5042cc4" >
+		<salesforce:query-all doc:name="Query all" doc:id="948e3579-2fc6-49af-bbf6-78def7b89c87" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[SELECT pid__c, Name, HealthCloudGA__Age__pc, HealthCloudGA__Gender__pc, Phone, BillingAddress FROM Account]]></salesforce:salesforce-query>
+		</salesforce:query-all>
+		<ee:transform doc:name="Transform Message" doc:id="003c828b-89d9-4bbb-85f2-3bb83e101f87" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
@@ -32,10 +25,39 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="dc3a0916-d313-41de-9b29-ea3bdf0e2784" />
+		<logger level="INFO" doc:name="Logger" doc:id="35f5627e-6288-4315-bf31-d10142cc0c40" />
 	</flow>
-	<flow name="post" doc:id="bf86b1bc-8675-40f6-8766-6f31a59ef498" >
-		<ee:transform doc:name="Transform Message" doc:id="f52a378a-0a72-44e5-803b-c05f43414aad" >
+	<flow name="getById" doc:id="ae13aac1-c2a7-4899-9370-f4bec7e62e2b" >
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="aebf9e63-a566-496c-b6d8-e70e442e3cdf" variableName="pid"/>
+		<salesforce:query doc:name="Query" doc:id="660b5f16-efc6-4955-8f67-c20c5b9a8ebd" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[SELECT pid__c, Name, HealthCloudGA__Age__pc, HealthCloudGA__Gender__pc, Phone, BillingAddress FROM Account
+WHERE pid__c = ':pid']]></salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	"pid" : vars.pid
+}]]]></salesforce:parameters>
+		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="abd70063-05dd-4f31-81f4-f70a7b0cb8a1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	pid: payload.pid__c,
+	Name: payload.Name,
+	Gender: payload.gender,
+	Age: payload.age,
+	Email: payload.email__c,
+	Phone: payload.Phone,
+	Address: payload.BillingAddress 
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="c46ac199-5d88-4717-a645-f69cce76466d" />
+	</flow>
+	<flow name="post" doc:id="6467cf79-e59f-4c4e-b4d1-652d55a1cadf" >
+		<ee:transform doc:name="Transform Message" doc:id="d0355798-9d1c-4187-844d-ecbdc5cf5033" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/java
@@ -53,15 +75,17 @@ output application/java
 }]]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<salesforce:upsert objectType="Account" externalIdFieldName="Id" doc:name="Upsert" doc:id="09c8c703-b7d1-4c3c-bf2f-5fc5bd2a5c5e" config-ref="Salesforce_Config"/>
-		<ee:transform doc:name="Transform Message" doc:id="7453e0ed-0264-4800-befd-9720f1478dd6" >
+		<salesforce:upsert doc:name="Upsert" doc:id="c0303446-bc90-4c28-86c6-88850a2b75e6" config-ref="Salesforce_Config" objectType="Account" externalIdFieldName="Id"/>
+		<ee:transform doc:name="Transform Message" doc:id="ce32b341-73a5-4513-8859-17d6ad8db06a" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-payload]]></ee:set-payload>
+{
+	message: "Record is Created/Updated"
+}]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="586e20f7-bf00-4bf3-83e2-1b543d66925d" />
+		<logger level="INFO" doc:name="Logger" doc:id="e829a644-3962-4907-8cfb-789db35de6a1" />
 	</flow>
 </mule>
