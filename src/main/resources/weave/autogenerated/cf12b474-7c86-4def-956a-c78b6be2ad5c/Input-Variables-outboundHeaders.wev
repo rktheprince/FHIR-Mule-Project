@@ -1,0 +1,7 @@
+%dw 2.0
+
+type auto_cf12b474_7c86_4def_956a_c78b6be2ad5c_Input_Variables_outboundHeaders = {|
+  "last-modified": String, 
+  etag: String
+|}
+

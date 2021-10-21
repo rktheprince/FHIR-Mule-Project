@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
-	<http:listener-config name="fhir-r4-us-core-patient-api-httpListenerConfig" doc:name="HTTP Listener config" doc:id="24c788e7-d295-41a4-8183-2c501566a02d" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
-	</http:listener-config>
-	<configuration-properties doc:name="Configuration properties" doc:id="46332746-73bc-466e-b896-008877bdde93" file="config.yaml" />
-	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="0d409c64-d058-4827-a970-8940e0f6f24a" >
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="851ea941-6672-4c32-9ca1-8579ba102b73" >
 		<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
 	</salesforce:sfdc-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="c0f49de2-c798-4323-9ae2-f61e14ba08c4" file="config.yaml" />
+	<http:listener-config name="fhir-r4-us-core-patient-api-httpListenerConfig" doc:name="HTTP Listener config" doc:id="a4285eeb-9a8b-49b7-bda6-4f712b4662f2" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
 </mule>
