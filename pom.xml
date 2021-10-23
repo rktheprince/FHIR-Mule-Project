@@ -7,7 +7,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
-	<name>fhir_mule_project</name>
+	<name>fhir_mule_project_app</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,7 +35,7 @@
             			<muleVersion>4.3.0</muleVersion>
             			<username>kulshrestharohit9999</username>
             			<password>Mulesoftci920</password>
-            			<applicationName>FHIRMuleProject</applicationName>
+            			<applicationName>FHIRMuleProjectApp</applicationName>
             			<environment>Sandbox</environment>
             			<workers>1</workers>
             			<workerType>MICRO</workerType>
